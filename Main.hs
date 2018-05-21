@@ -37,7 +37,7 @@ type MessageId = PrimaryKey MessageT Identity
 type Message = MessageT Identity
 deriving instance Show Message
 
-data LogDb f = LogDb { _logDbMessages :: f (TableEntity MessageT) }
+data LogDb f = LogDb { _logdbMessages :: f (TableEntity MessageT) }
              deriving (Generic)
 instance Database be LogDb
 
@@ -62,10 +62,9 @@ main = do
         MQTT.Publish topic msgId payload <- pure msgBody
         t <- getZonedTime
         runBeamSqliteDebug putStrLn conn $ runInsert
-            $ insert (_logDbMessages logDb)
+            $ insert (_logdbMessages logDb)
             $ insertExpressions [ Message { _msgId = default_
                                           , _msgTime = val_ (zonedTimeToLocalTime t)
                                           , _msgTopic = val_ (MQTT.text $ MQTT.fromTopic topic)
                                           , _msgPayload = val_ payload
                                           } ]
-        putStrLn "Hello, Haskell!"
