@@ -1,0 +1,29 @@
+name:                mqtt-log
+version:             0.1.0.0
+-- synopsis:            
+-- description:         
+homepage:            http://www.github.com/bgamari/mqtt-log
+license:             BSD3
+license-file:        LICENSE
+author:              Ben Gamari
+maintainer:          ben@smart-cactus.org
+copyright:           (c) 2018 Ben Gamari
+category:            Database
+build-type:          Simple
+extra-source-files:  ChangeLog.md
+cabal-version:       >=1.10
+
+executable mqtt-log
+  main-is:             Main.hs
+  ghc-options:         -threaded
+  build-depends:       base >=4.10 && <4.12,
+                       async,
+                       text >= 1.2,
+                       stm,
+                       time,
+                       bytestring >= 0.10,
+                       beam-core,
+                       beam-sqlite,
+                       sqlite-simple,
+                       mqtt-hs
+  default-language:    Haskell2010
