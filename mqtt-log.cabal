@@ -10,11 +10,11 @@ maintainer:          ben@smart-cactus.org
 copyright:           (c) 2018 Ben Gamari
 category:            Database
 build-type:          Simple
-extra-source-files:  ChangeLog.md
 cabal-version:       >=1.10
 
 executable mqtt-log
   main-is:             Main.hs
+  other-modules:       MqttLog
   ghc-options:         -threaded
   build-depends:       base >=4.10 && <4.12,
                        async,
@@ -25,5 +25,6 @@ executable mqtt-log
                        beam-core,
                        beam-sqlite,
                        sqlite-simple,
-                       mqtt-hs
+                       mqtt-hs,
+                       optparse-applicative >= 0.14
   default-language:    Haskell2010
