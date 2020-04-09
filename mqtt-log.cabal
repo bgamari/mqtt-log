@@ -16,7 +16,7 @@ executable mqtt-log
   main-is:             Main.hs
   other-modules:       MqttLog
   ghc-options:         -threaded
-  build-depends:       base >=4.10 && <4.12,
+  build-depends:       base >=4.10 && <4.15,
                        async,
                        text >= 1.2,
                        stm,
