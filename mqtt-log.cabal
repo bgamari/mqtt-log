@@ -19,6 +19,7 @@ executable mqtt-log
   build-depends:       base >=4.10 && <4.15,
                        async,
                        text >= 1.2,
+                       filepath,
                        stm,
                        time,
                        bytestring >= 0.10,

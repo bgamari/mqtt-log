@@ -17,9 +17,10 @@ options :: Parser Options
 options =
     Options
       <$> switch (long "debug" <> help "Enable debug output")
-      <*> option str (long "hostname" <> short 'H' <> help "Server hostname" <> value "localhost")
-      <*> optional (option text (long "user" <> short 'u' <> help "User to connect as"))
-      <*> optional (option text (long "password" <> short 'p' <> help "Password"))
+      <*> option str (long "hostname" <> short 'H' <> help "MQTT server hostname" <> value "localhost")
+      <*> optional (option text (long "user" <> short 'u' <> help "MQTT user to connect as"))
+      <*> optional (option text (long "password" <> short 'p' <> help "MQTT password"))
+      <*> option str (long "database" <> short 'D' <> value "mqtt-log.db" <> help "Database path")
   where
     text = T.pack <$> str
 

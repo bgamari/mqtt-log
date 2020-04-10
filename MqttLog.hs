@@ -20,6 +20,7 @@ import Database.Beam.Sqlite
 import Database.SQLite.Simple
 import qualified Data.ByteString as BS
 import qualified Data.Text as T
+import System.FilePath
 
 data MessageT f
     = Message { _msgId :: Columnar f Int
@@ -49,6 +50,7 @@ data Options = Options { optDebug :: Bool
                        , optHostname :: String
                        , optUsername :: Maybe T.Text
                        , optPassword :: Maybe T.Text
+                       , optDatabase :: FilePath
                        }
 
 run :: Options -> IO ()
@@ -65,7 +67,7 @@ run Options{..} = do
     mqtt <- async $ void $ MQTT.run config >>= print
     MQTT.subscribe config [("#", MQTT.Handshake)]
 
-    conn <- open "log.db"
+    conn <- open optDatabase
     forever $ do
         MQTT.Message _ msgBody <- atomically $ readTChan chan
         MQTT.Publish topic msgId payload <- pure msgBody
