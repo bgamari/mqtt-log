@@ -21,6 +21,7 @@ options =
       <*> optional (option text (long "user" <> short 'u' <> help "MQTT user to connect as"))
       <*> optional (option text (long "password" <> short 'p' <> help "MQTT password"))
       <*> option str (long "database" <> short 'D' <> value "mqtt-log.db" <> help "Database path")
+      <*> some (option str (long "topic" <> short 't' <> help "Topic to subscribe to"))
   where
     text = T.pack <$> str
 

@@ -9,6 +9,7 @@
 
 module MqttLog where
 
+import Data.String
 import Control.Monad
 import Control.Concurrent.Async
 import Control.Concurrent.STM
@@ -46,11 +47,12 @@ instance Database be LogDb
 logDb :: DatabaseSettings be LogDb
 logDb = defaultDbSettings
 
-data Options = Options { optDebug :: Bool
+data Options = Options { optDebug    :: Bool
                        , optHostname :: String
                        , optUsername :: Maybe T.Text
                        , optPassword :: Maybe T.Text
                        , optDatabase :: FilePath
+                       , optTopics   :: [String]
                        }
 
 run :: Options -> IO ()
@@ -65,7 +67,7 @@ run Options{..} = do
                                                 }
 
     mqtt <- async $ void $ MQTT.run config >>= print
-    MQTT.subscribe config [("#", MQTT.Handshake)]
+    MQTT.subscribe config [ (fromString topic, MQTT.Handshake) | topic <- optTopics ]
 
     conn <- open optDatabase
     forever $ do
